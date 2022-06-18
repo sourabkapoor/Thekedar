@@ -6,7 +6,7 @@ import TextFiled from "../formComponents/textField/textFiled"
 import "./machineForm.scss"
 import { nanoid } from 'nanoid'
 
-const MachineForm = () => {
+const MachineForm = (props) => {
   const [name, setname] = useState("")
   const [typeName, setTypeName] = useState("")
   const [formFields, setFormFields] = useState([ { "id": nanoid(), "type": "Small text" } ])
@@ -39,7 +39,7 @@ const MachineForm = () => {
     <div className="machineHeadingCntr">
       <div style={{fontSize: 18}}>{typeName}</div>
 
-      <div className="deleteBtn">&#x2715;</div>
+      <div className="deleteBtn" onClick={() => props.deleteMachine(props.machineId)}>&#x2715;</div>
     </div>
     <div className="machineBodyCntr">
       <Form>
