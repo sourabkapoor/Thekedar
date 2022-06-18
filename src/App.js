@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import ControlNavbar from './components/controlNavbar/controlNavbar';
 import Home from './components/home/home';
 import Machine from './components/machine/machine';
-import ManageMachines from './components/manageMachines/managemachines';
+import ManageMachines from './components/manageMachines/manageMachines';
 
 function App() {
   return (

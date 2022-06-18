@@ -1,0 +1,28 @@
+.machineFormContr {
+  border: 1px solid #cdcdcd;
+  border-radius: 7px;
+  margin: 10px;
+  min-height: 400px;
+  min-width: 200px;
+  overflow: hidden;
+
+  .machineHeadingCntr {
+    background: rgb(228, 228, 228);
+    border-bottom: 1px solid #cdcdcd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 14px;
+    min-height: 34px;
+  }
+
+  .machineBodyCntr {
+    padding: 14px;
+
+    .form-label {
+      font-size: 14px;
+      color: black;
+      font-weight: 400;
+    }
+  }
+}
