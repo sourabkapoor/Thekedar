@@ -12,7 +12,7 @@ const InputTypeDropDown = (props) => {
 
   const inputValueChange = (value) => {
     setinputValue(value.value)
-    props.valueChange(value)
+    props.valueChange(props.fieldId, value)
   }
 
   return (

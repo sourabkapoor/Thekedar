@@ -1,37 +1,48 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Form } from "react-bootstrap"
 import AddFieldBtn from "../formComponents/addFieldBtn/addFieldBtn"
 import InputTypeDropDown from "../formComponents/inputTypeDropDown/inputTypeDropDown"
 import TextFiled from "../formComponents/textField/textFiled"
 import "./machineForm.scss"
 import { nanoid } from 'nanoid'
+import { useSelector, useDispatch } from "react-redux"
+import { editCategoryForm, deleteCategoryForm, changeCategoryTypeName, changeCategoryName, changeCategoryFormDt } from "../../redux/actions"
 
 const MachineForm = (props) => {
-  const [name, setname] = useState("")
-  const [typeName, setTypeName] = useState("")
-  const [formFields, setFormFields] = useState([ { "id": nanoid(), "type": "Small text" } ])
+  const dispatch = useDispatch()
+  // const machineList = useSelector(state => state.categoryReducer)
+
+  const [name, setname] = useState(props.name)
+  const [typeName, setTypeName] = useState(props.typeName)
+  const [formFields, setFormFields] = useState(props.machineData.form)
+
+  // use Effect to update the view of form dt.
+  useEffect(()=> {
+    setFormFields(props.machineData.form)
+  }, [props.machineData.form])
 
   const inputChange = (e) => {
     let textvalue = e.target.value
     if(e.target.id === "objectType") {
       setTypeName(textvalue)
+      dispatch(changeCategoryTypeName(props.machineId, textvalue))
     }
     else if(e.target.id === "objectTitle") {
       setname(textvalue)
+      dispatch(changeCategoryName(props.machineId, textvalue))
     }
   }
 
-  const fieldValueChange = (newValue) => {
-    console.log("value is: ", newValue)
-    return true
+  const fieldValueChange = (fieldId, newValue) => {
+    dispatch(changeCategoryFormDt(props.machineId, fieldId, newValue))
   }
 
   const addNewField = (type) => {
-    setFormFields([...formFields, {id: nanoid(), type: type}])
+    dispatch(editCategoryForm(props.machineId, {id: nanoid(), type: type, value: ""}))
   }
 
   const fieldRemove = (removeFieldId) => {
-    setFormFields(formFields.filter(fields => fields.id !== removeFieldId))
+    dispatch(deleteCategoryForm(props.machineId, removeFieldId))
   }
 
 
@@ -66,10 +77,10 @@ const MachineForm = (props) => {
             { formFields.map(field => {
                 return <div key={"formField" + field.id}>
                   <InputTypeDropDown 
-                    text=""
+                    text={field.value}
                     fieldId={field.id}
                     fieldType={field.type}
-                    valueChange={(changedValue) => fieldValueChange(changedValue.value)}
+                    valueChange={(valueId, changedValue) => fieldValueChange(valueId, changedValue.value)}
                     removeFiled={(id) => fieldRemove(id)}
                   />
                 </div>

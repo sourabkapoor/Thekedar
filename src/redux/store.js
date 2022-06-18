@@ -1,8 +1,8 @@
 import { createStore, combineReducers } from "redux";
-import machineReducer from "./reducers/machinesReducers";
+import categoryReducer from "./reducers/categoryReducer";
 
 const store = createStore(combineReducers({
-  machineReducer
+  categoryReducer
 }), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 export default store
