@@ -40,12 +40,18 @@ const categoryReducer = (initialState = state, action) => {
       initialState[categoryIndex].form = newDt
       return [...initialState]
 
-    // Accepts 3: category Id, form Id & value
+    // Accepts 4: category Id, form Id, value & type
     case "EDIT_CATEGORY_FORM":
       let formCategoryIndex = initialState.findIndex(categor => categor.id === action.payload.id)
       let formDtIndex = initialState[formCategoryIndex].form.findIndex(formItem => formItem.id === action.payload.formId)
       initialState[formCategoryIndex].form[formDtIndex].value = action.payload.data
+      initialState[formCategoryIndex].form[formDtIndex].type = action.payload.type
       return [...initialState]
+
+    // Accepts 1: machine type
+    case "GET_MACHINES":
+      let filteredMachines = initialState.filter(machine => machine.typeName === action.payload.type)
+      return [...filteredMachines]
     
     default:
       return initialState

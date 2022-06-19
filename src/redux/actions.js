@@ -40,9 +40,37 @@ export const changeCategoryTypeName = (categoryId, typeName) => {
   }
 }
 
-export const changeCategoryFormDt = (categoryId, formId, data) => {
+export const changeCategoryFormDt = (categoryId, formId, data, type) => {
   return {
     type: "EDIT_CATEGORY_FORM",
-    payload: {id: categoryId, formId, data}
+    payload: {id: categoryId, formId, data, type}
+  }
+}
+
+export const getMachines = (type) => {
+  return {
+    type: "GET_MACHINES",
+    payload: { type }
+  }
+}
+
+export const addMachine = (data) => {
+  return {
+    type: "ADD_MACHINE",
+    payload: {newMachine: data}
+  }
+}
+
+export const deleteMachine = (machineId) => {
+  return {
+    type: "REMOVE_MACHINE",
+    payload: {machineId}
+  }
+}
+
+export const updateMachine = (updateId, value, machineId) => {
+  return {
+    type: "UPDATE_MACHINE",
+    payload: {updateId, value, machineId}
   }
 }

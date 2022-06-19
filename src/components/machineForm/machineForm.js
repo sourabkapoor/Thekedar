@@ -5,12 +5,11 @@ import InputTypeDropDown from "../formComponents/inputTypeDropDown/inputTypeDrop
 import TextFiled from "../formComponents/textField/textFiled"
 import "./machineForm.scss"
 import { nanoid } from 'nanoid'
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import { editCategoryForm, deleteCategoryForm, changeCategoryTypeName, changeCategoryName, changeCategoryFormDt } from "../../redux/actions"
 
 const MachineForm = (props) => {
   const dispatch = useDispatch()
-  // const machineList = useSelector(state => state.categoryReducer)
 
   const [name, setname] = useState(props.name)
   const [typeName, setTypeName] = useState(props.typeName)
@@ -33,8 +32,8 @@ const MachineForm = (props) => {
     }
   }
 
-  const fieldValueChange = (fieldId, newValue) => {
-    dispatch(changeCategoryFormDt(props.machineId, fieldId, newValue))
+  const fieldValueChange = (fieldId, newValue, type) => {
+    dispatch(changeCategoryFormDt(props.machineId, fieldId, newValue, type))
   }
 
   const addNewField = (type) => {
@@ -57,6 +56,7 @@ const MachineForm = (props) => {
         {/* Object type */}
         <TextFiled 
           id="objectType"
+          type="Small text"
           formLabel="Object type"
           value={typeName}
           inputChange={inputChange}
@@ -65,6 +65,7 @@ const MachineForm = (props) => {
         {/* object title */}
         <TextFiled 
           id="objectTitle"
+          type="Small text"
           formLabel="Object title"
           value={name}
           inputChange={inputChange}
@@ -80,7 +81,7 @@ const MachineForm = (props) => {
                     text={field.value}
                     fieldId={field.id}
                     fieldType={field.type}
-                    valueChange={(valueId, changedValue) => fieldValueChange(valueId, changedValue.value)}
+                    valueChange={(valueId, changedValue, type) => fieldValueChange(valueId, changedValue.value, type)}
                     removeFiled={(id) => fieldRemove(id)}
                   />
                 </div>

@@ -4,21 +4,23 @@ import Home from './components/home/home';
 import Machine from './components/machine/machine';
 import ManageMachines from './components/manageMachines/manageMachines';
 import { useSelector } from "react-redux"
-import { useState } from 'react';
 
 function App() {
   const categories = useSelector(state => state.categoryReducer)
-
-  const [routes, setRoutes] = useState("")
 
   return (
     <div className="App">
       <ControlNavbar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='a' element={<Machine />} />
-        <Route path='b' element={<Machine />} />
+        {
+          categories.map(item => {
+            return <Route key={item.id} path={item.typeName} element={<Machine type={item.typeName}/>} />
+          })
+        }
         <Route path='manage' element={<ManageMachines />} />
+        
+        {/* <Route path='*' element={<Home />} /> */}
       </Routes>
     </div>
   );

@@ -8,48 +8,24 @@ const InputTypeDropDown = (props) => {
   const changeFieldtype = (newType) => {
     setActive(newType)
     setinputValue("")
+    props.valueChange(props.fieldId, "", newType)
   }
 
   const inputValueChange = (value) => {
     setinputValue(value.value)
-    props.valueChange(props.fieldId, value)
+    props.valueChange(props.fieldId, value, props.fieldType)
   }
 
   return (
     <>
       <InputGroup className="mb-3">
-        {  activeType === "Small text" ?
+
          <Form.Control 
             value={inputValue} 
             placeholder="Enter field name" 
             type="text" 
             onChange={(e) => inputValueChange(e.target)}
           />
-          :
-          activeType === "Long text" ?
-          <Form.Control
-            value={inputValue}
-            placeholder="Enter field name" 
-            type="textArea" 
-            onChange={(e) => inputValueChange(e.target)}
-          />
-          :
-          activeType === "Number" ?
-          <Form.Control 
-            value={inputValue} 
-            placeholder="Enter field name" 
-            type="number" 
-            onChange={(e) => inputValueChange(e.target)}
-          />
-          :
-          <Form.Control
-            value={inputValue}
-            placeholder="Enter field name" 
-            type="date" 
-            onChange={(e) => inputValueChange(e.target)}
-          />
-
-        }
 
         <DropdownButton
           variant="outline-secondary"

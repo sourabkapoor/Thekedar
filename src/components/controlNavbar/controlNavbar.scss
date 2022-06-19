@@ -1,4 +1,6 @@
 .customNavbar {
+  max-width: 100%;
+  overflow-x: auto;
   
   .customBrandTxt {
     font-size: 30px;
@@ -13,7 +15,7 @@
   }
 
   .activeClass {
-    color: rgb(250, 65, 65);
+    color: rgb(250, 65, 65) !important;
   }
 
   a, a:hover, a:focus, a:active {

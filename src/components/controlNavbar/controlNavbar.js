@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./controlNavbar.scss"
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ControlNavbar = () => {
   const location = useLocation();
+  const categories = useSelector(state => state.categoryReducer)
   const [activeNav, setActiveNav] = useState("")
 
   // Set active nav useeffect
@@ -21,13 +23,13 @@ const ControlNavbar = () => {
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
 
-        <Link id="link-a" to="a" className={activeNav == "/a" ? "navItem activeClass" : "navItem"}>
-          MachineA
-        </Link>
-
-        <Link id="link-b" to="b" className={activeNav == "/b" ? "navItem activeClass" : "navItem"}>
-          MachineB
-        </Link>
+        { // Create nav links from category redux array.
+          categories.map(item => {
+            return <Link key={"NavLink" + item.id} to={item.typeName} className={activeNav == `/${item.typeName}` ? "navItem activeClass" : "navItem"}>
+              {item.typeName}
+            </Link>
+          })
+        }
 
         <Link id="link-manage" to="manage" className={activeNav == "/manage" ? "navItem activeClass" : "navItem"}>
           Manage Machines
