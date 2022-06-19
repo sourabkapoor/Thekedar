@@ -4,7 +4,6 @@ const machineReducer = (initialState = state, action) => {
   switch(action.type) {
     // accepts the machine data
     case "ADD_MACHINE":
-      console.log("check: ", [...initialState, action.payload.newMachine])
       return [...initialState, action.payload.newMachine]
 
     // accepts the machine id

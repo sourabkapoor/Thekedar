@@ -16,14 +16,10 @@ const Machine = ({type}) => {
   const [categoryForm, setCategoryForm] = useState(null)
 
   useEffect(() => {
-    // get all machines form of same typename 
+    // get all machines form of same typename
+    setMachineList(machines.filter(machine => machine.typeName.lable === type))
     setCategoryForm(form.filter(machine => machine.typeName === type))
   }, [type])
-
-  // Update on deleting machine
-  useEffect(() => {
-    setMachineList(machines)
-  }, [machines])
 
   const machineAdd = () => {
     var newMachine = {}
@@ -39,11 +35,14 @@ const Machine = ({type}) => {
       }]
     ) 
     dispatch(addMachine(newMachine))
-    setMachineList([...machineList, newMachine])
+    var filteredMachines = machines.filter(machine => machine.typeName.lable === type)
+    setMachineList([...filteredMachines, newMachine])
   }
 
   const machineDelete = (deleteId) => {
     dispatch(deleteMachine(deleteId))
+    var remainingMachines = machines.filter(machine => machine.id !== deleteId)
+    setMachineList([...remainingMachines])
   }
 
   const inputChange = (e, id, field, machineId) => {
