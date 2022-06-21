@@ -3,10 +3,11 @@ import MachineForm from "../machineForm/machineForm";
 import "./manageMachine.scss"
 import { nanoid } from 'nanoid'
 import { useSelector, useDispatch } from "react-redux"
-import { addCategory, deleteCategory } from "../../redux/actions"
+import { addCategory, deleteCategory, deleteMachine } from "../../redux/actions"
 
 const ManageMachines = () => {
   const machineCategList = useSelector(state => state.categoryReducer)
+  const machinesList = useSelector(state => state.machineReducer)
   const dispatch = useDispatch()
 
   // Add a new machine category
@@ -17,6 +18,12 @@ const ManageMachines = () => {
   // Delete a machine category
   const machineDelete = (deltId) => {
     dispatch(deleteCategory(deltId))
+
+    // delete the machines of that category
+    var delMachines = machinesList.filter(machine => machine.categoryId === deltId)
+    delMachines.forEach(item => {
+      dispatch(deleteMachine(item.id))
+    })
   }
 
   return <div className="manageMachnineCntr">
