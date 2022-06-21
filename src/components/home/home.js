@@ -12,7 +12,6 @@ const Home = () => {
   const dispatch = useDispatch()
 
   const [machineList, setMachineList] = useState(machines)
-  
 
   const machineAdd = (machineType) => {
     var machineForm = form.filter(category => category.typeName === machineType)
@@ -66,7 +65,7 @@ const Home = () => {
             {
               machine.form.map(formItem => {
                 return <div key={"machineView" + formItem.id}>
-                  <TextFiled 
+                  <TextFiled
                     id={formItem.id}
                     type={formItem.type}
                     formLabel={formItem.lable}
@@ -81,10 +80,15 @@ const Home = () => {
       })
     }
 
-    <AddMachineBtn 
-      machineTypes={form}
-      addMachine={(machineType) => machineAdd(machineType)}  
-    />
+    {/* Add a new machine of any type */}
+    { form.length > 0 ?
+        <AddMachineBtn 
+        machineTypes={form}
+        addMachine={(machineType) => machineAdd(machineType)}  
+        />
+      : 
+      <p>No machines added</p>
+    }
   </div>
 }
 

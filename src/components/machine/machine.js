@@ -7,12 +7,10 @@ import { nanoid } from 'nanoid'
 
 const Machine = ({type}) => {
   const form = useSelector(state => state.categoryReducer)
-  
   const machines = useSelector(state => state.machineReducer)
-  
   const dispatch = useDispatch()
+
   const [machineList, setMachineList] = useState(machines)
-  
   const [categoryForm, setCategoryForm] = useState(null)
 
   useEffect(() => {

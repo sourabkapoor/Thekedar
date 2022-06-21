@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 
-const TextFiled = (props) => {
-  const [value, setvalue] = useState(props.value)
-  
+const TextFiled = (props) => {  
   const [Fieldtype, setFieldType] = useState("text")
 
   useEffect(() => {
@@ -15,10 +13,9 @@ const TextFiled = (props) => {
     <Form.Control
       id={props.id}
       type={Fieldtype} 
-      value={value}
-      placeholder="Object title" 
+      value={props.value}
+      placeholder={props.formLabel} 
       onChange={(e) => {
-        setvalue(e.target.value)
         props.inputChange(e)
       }}
     />

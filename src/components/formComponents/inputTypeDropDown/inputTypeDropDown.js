@@ -2,17 +2,12 @@ import { InputGroup, Form, Dropdown, DropdownButton } from "react-bootstrap";
 const { useState } = require("react");
 
 const InputTypeDropDown = (props) => {
-  const [activeType, setActive] = useState(props.fieldType);
-  const [inputValue, setinputValue] = useState(props.text)
 
   const changeFieldtype = (newType) => {
-    setActive(newType)
-    setinputValue("")
     props.valueChange(props.fieldId, "", newType)
   }
 
   const inputValueChange = (value) => {
-    setinputValue(value.value)
     props.valueChange(props.fieldId, value, props.fieldType)
   }
 
@@ -21,15 +16,15 @@ const InputTypeDropDown = (props) => {
       <InputGroup className="mb-3">
 
          <Form.Control 
-            value={inputValue} 
+            value={props.text} 
             placeholder="Enter field name" 
             type="text" 
-            onChange={(e) => inputValueChange(e.target)}
+            onChange={(e) => inputValueChange(e.target.value)}
           />
 
         <DropdownButton
           variant="outline-secondary"
-          title={activeType}
+          title={props.fieldType}
           id="formTypeSelect"
           align="end"
         >

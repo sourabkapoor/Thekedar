@@ -11,35 +11,34 @@ import { editCategoryForm, deleteCategoryForm, changeCategoryTypeName, changeCat
 const MachineForm = (props) => {
   const dispatch = useDispatch()
 
-  const [name, setname] = useState(props.name)
-  const [typeName, setTypeName] = useState(props.typeName)
-  const [formFields, setFormFields] = useState(props.machineData.form)
+  // const [formFields, setFormFields] = useState(props.machineData.form)
 
   // use Effect to update the view of form dt.
-  useEffect(()=> {
-    setFormFields(props.machineData.form)
-  }, [props.machineData.form])
+  // useEffect(()=> {
+  //   setFormFields(props.machineData.form)
+  // }, [props.machineData.form])
 
   const inputChange = (e) => {
     let textvalue = e.target.value
     if(e.target.id === "objectType") {
-      setTypeName(textvalue)
       dispatch(changeCategoryTypeName(props.machineId, textvalue))
     }
     else if(e.target.id === "objectTitle") {
-      setname(textvalue)
       dispatch(changeCategoryName(props.machineId, textvalue))
     }
   }
 
+  // Change the form field
   const fieldValueChange = (fieldId, newValue, type) => {
     dispatch(changeCategoryFormDt(props.machineId, fieldId, newValue, type))
   }
 
+  // Add a new form field
   const addNewField = (type) => {
     dispatch(editCategoryForm(props.machineId, {id: nanoid(), type: type, value: ""}))
   }
 
+  // remove a form field
   const fieldRemove = (removeFieldId) => {
     dispatch(deleteCategoryForm(props.machineId, removeFieldId))
   }
@@ -47,7 +46,7 @@ const MachineForm = (props) => {
 
   return <div className="machineFormContr">
     <div className="machineHeadingCntr">
-      <div style={{fontSize: 18}}>{typeName}</div>
+      <div style={{fontSize: 18}}>{props.typeName}</div>
 
       <div className="deleteBtn" onClick={() => props.deleteMachine(props.machineId)}>&#x2715;</div>
     </div>
@@ -58,7 +57,7 @@ const MachineForm = (props) => {
           id="objectType"
           type="Small text"
           formLabel="Object type"
-          value={typeName}
+          value={props.typeName}
           inputChange={inputChange}
         />
 
@@ -67,21 +66,21 @@ const MachineForm = (props) => {
           id="objectTitle"
           type="Small text"
           formLabel="Object title"
-          value={name}
+          value={props.name}
           inputChange={inputChange}
         />
 
-        { formFields.length > 0 &&
+        { props.machineForm.length > 0 &&
           <Form.Group className="mb-2">
             <Form.Label>Fields</Form.Label>
   
-            { formFields.map(field => {
+            { props.machineForm.map(field => {
                 return <div key={"formField" + field.id}>
                   <InputTypeDropDown 
                     text={field.value}
                     fieldId={field.id}
                     fieldType={field.type}
-                    valueChange={(valueId, changedValue, type) => fieldValueChange(valueId, changedValue.value, type)}
+                    valueChange={(valueId, changedValue, type) => fieldValueChange(valueId, changedValue, type)}
                     removeFiled={(id) => fieldRemove(id)}
                   />
                 </div>
