@@ -8,8 +8,8 @@ const machineReducer = (initialState = state, action) => {
 
     // accepts the machine id
     case "REMOVE_MACHINE":
-      var filteredMachines = initialState.filter(machine => machine.id !== action.payload.machineId)
-      return [...filteredMachines]
+      initialState = [...initialState.filter(machine => machine.id !== action.payload.machineId)]
+      return [...initialState]
 
     // accepts updateId & value & machineId
     case "UPDATE_MACHINE":
@@ -25,6 +25,12 @@ const machineReducer = (initialState = state, action) => {
         initialState[filterTypeIndex].name.value = action.payload.value
       }
       return [...initialState]
+
+    case "TRANSFORM_MACHINE":
+      let transformIds = action.payload.map(item => String(item.id))
+      let newMachines = [...initialState.filter(machine => !transformIds.includes(machine.id))]
+      // console.log("initial state: ", newMachines)
+      return [...newMachines, ...action.payload]
 
     default: 
       return initialState

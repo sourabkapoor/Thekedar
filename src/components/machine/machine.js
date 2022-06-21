@@ -22,6 +22,7 @@ const Machine = ({type}) => {
   const machineAdd = () => {
     var newMachine = {}
     newMachine.id = nanoid()
+    newMachine.categoryId = categoryForm[0].id
     newMachine.name = { id: nanoid(), lable: categoryForm[0].name, value: "" }
     newMachine.typeName = { id: nanoid(), lable: categoryForm[0].typeName, value: "" }
     newMachine.form = []
@@ -29,7 +30,8 @@ const Machine = ({type}) => {
         id: nanoid(),
         type: formItem.type,
         lable: formItem.value,
-        value: ""
+        value: "",
+        formImportId: formItem.id
       }]
     ) 
     dispatch(addMachine(newMachine))
@@ -39,7 +41,7 @@ const Machine = ({type}) => {
 
   const machineDelete = (deleteId) => {
     dispatch(deleteMachine(deleteId))
-    var remainingMachines = machines.filter(machine => machine.id !== deleteId)
+    var remainingMachines = machineList.filter(machine => machine.id !== deleteId)
     setMachineList([...remainingMachines])
   }
 

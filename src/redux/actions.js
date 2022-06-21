@@ -74,3 +74,10 @@ export const updateMachine = (updateId, value, machineId) => {
     payload: {updateId, value, machineId}
   }
 }
+
+export const transformMachine = (machines) => {
+  return {
+    type: "TRANSFORM_MACHINE",
+    payload: machines
+  }
+}

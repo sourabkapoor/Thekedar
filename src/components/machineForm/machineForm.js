@@ -5,19 +5,14 @@ import InputTypeDropDown from "../formComponents/inputTypeDropDown/inputTypeDrop
 import TextFiled from "../formComponents/textField/textFiled"
 import "./machineForm.scss"
 import { nanoid } from 'nanoid'
-import { useDispatch } from "react-redux"
-import { editCategoryForm, deleteCategoryForm, changeCategoryTypeName, changeCategoryName, changeCategoryFormDt } from "../../redux/actions"
+import { useDispatch, useSelector } from "react-redux"
+import { editCategoryForm, deleteCategoryForm, changeCategoryTypeName, changeCategoryName, changeCategoryFormDt, transformMachine } from "../../redux/actions"
 
 const MachineForm = (props) => {
+  const machines = useSelector(state => state.machineReducer)
   const dispatch = useDispatch()
 
-  // const [formFields, setFormFields] = useState(props.machineData.form)
-
-  // use Effect to update the view of form dt.
-  // useEffect(()=> {
-  //   setFormFields(props.machineData.form)
-  // }, [props.machineData.form])
-
+  // Changes typeName & name of a machone form
   const inputChange = (e) => {
     let textvalue = e.target.value
     if(e.target.id === "objectType") {
@@ -31,11 +26,38 @@ const MachineForm = (props) => {
   // Change the form field
   const fieldValueChange = (fieldId, newValue, type) => {
     dispatch(changeCategoryFormDt(props.machineId, fieldId, newValue, type))
+
+    if(machines.length > 0) {
+      let editMachines = machines.filter(obj => obj.categoryId === props.machineId)
+      editMachines.map(machine => {
+        machine.form.map(form => {
+          if(form.formImportId === fieldId) {
+            form.type = type
+            form.lable = newValue
+            form.value = ""
+          }
+        })
+      })
+      // update all the machines created with new form
+      if(editMachines.length > 0)
+        dispatch(transformMachine(editMachines))
+    }
   }
 
   // Add a new form field
   const addNewField = (type) => {
-    dispatch(editCategoryForm(props.machineId, {id: nanoid(), type: type, value: ""}))
+    var fieldId = nanoid()
+    dispatch(editCategoryForm(props.machineId, {id: fieldId, type: type, value: ""}))
+
+    if(machines.length > 0) {
+      let editMachines = machines.filter(obj => obj.categoryId === props.machineId)
+      editMachines.map(machine => {
+        machine.form = [...machine.form, {id: fieldId, type: type, value: ""}]
+      })
+      // Add a new form field in machine
+      if(editMachines.length > 0)
+        dispatch(transformMachine(editMachines))
+    }
   }
 
   // remove a form field
